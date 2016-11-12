@@ -24,7 +24,6 @@ class SetAddress(graphene.Mutation):
 
     latlng = graphene.Field(Address) 
     def mutate(self, args, context, info):
-        print("Hello")
         geo = args.get('geo')
         return SetAddress(latlng="({},{})".format(geo.get('lat'), geo.get('lng')))
 
