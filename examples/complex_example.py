@@ -20,12 +20,13 @@ class Query(graphene.ObjectType):
 # Mutate example
 class SetAddress(graphene.Mutation):
     class Input:
-        geo = graphene.InputField(GeoInput)
+        geo = GeoInput()
 
-    latlng = graphene.Field(Address) 
+    address = graphene.Field(lambda: Address) 
     def mutate(self, args, context, info):
         geo = args.get('geo')
-        return SetAddress(latlng="({},{})".format(geo.get('lat'), geo.get('lng')))
+        address = Address(latlng="({},{})".format(geo.get('lat'), geo.get('lng')))
+        return SetAddress(address=address)
 
 class Mutation(graphene.ObjectType):
     setAddress = SetAddress.Field()
